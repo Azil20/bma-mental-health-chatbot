@@ -3060,3 +3060,55 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-04-29 13:23:52 | DEBUG    | app.controllers.chat_controller | intent=creation conf=0.86 emotion=low_self_esteem
 2026-04-29 13:23:52 | DEBUG    | app.services.response_engine | Dataset hit: intent=creation conf=0.86
 2026-04-29 13:23:52 | INFO     | app.controllers.chat_controller | Dataset response used (intent=creation, conf=0.86)
+2026-04-30 15:23:01 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:23:01 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:23:01 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:23:16 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:23:16 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:23:16 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:23:16 | WARNING  | werkzeug                  |  * Debugger is active!
+2026-04-30 15:24:07 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:24:08 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:24:08 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:24:20 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:24:20 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:24:20 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:24:20 | WARNING  | werkzeug                  |  * Debugger is active!
+2026-04-30 15:35:35 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:35:36 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:35:36 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:35:51 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:35:51 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:35:51 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:35:51 | WARNING  | werkzeug                  |  * Debugger is active!
+2026-04-30 15:44:43 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:44:44 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:44:44 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:44:58 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 15:44:58 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 15:44:58 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 15:44:58 | WARNING  | werkzeug                  |  * Debugger is active!
+2026-04-30 16:17:09 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:17:09 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:17:09 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 16:17:19 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:17:19 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:17:19 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 16:17:19 | WARNING  | werkzeug                  |  * Debugger is active!
+2026-04-30 16:19:29 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:19:29 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:19:29 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 16:20:39 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:20:39 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:20:39 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 16:34:50 | INFO     | app.controllers.chat_controller | user_lang=en | original='who created you' | en='who created you'
+2026-04-30 16:34:52 | DEBUG    | app.controllers.chat_controller | intent=creation conf=0.86 emotion=low_self_esteem
+2026-04-30 16:34:52 | DEBUG    | app.services.response_engine | Dataset hit: intent=creation conf=0.86
+2026-04-30 16:34:52 | INFO     | app.controllers.chat_controller | Dataset response used (intent=creation, conf=0.86)
+2026-04-30 16:36:25 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:36:25 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:36:25 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 16:38:59 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:38:59 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:38:59 | INFO     | app                       | BMA Flask app created successfully.
+2026-04-30 16:39:48 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.

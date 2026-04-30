@@ -21,4 +21,5 @@ setup_logging(log_file=log_file, log_level="DEBUG" if Config.DEBUG else "INFO")
 app = create_app(Config)
 
 if __name__ == "__main__":
-    app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)
+    print(f"Website is running. Open: http://127.0.0.1:{Config.PORT}")
+    app.run(host=Config.HOST, port=Config.PORT, debug=False, use_reloader=False)
