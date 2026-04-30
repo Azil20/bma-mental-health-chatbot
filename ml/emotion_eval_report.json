@@ -1,0 +1,88 @@
+{
+  "anger": {
+    "precision": 1.0,
+    "recall": 0.9966666666666667,
+    "f1-score": 0.998330550918197,
+    "support": 300.0
+  },
+  "anxiety": {
+    "precision": 0.9966777408637874,
+    "recall": 1.0,
+    "f1-score": 0.9983361064891847,
+    "support": 300.0
+  },
+  "body_image_issue": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "burnout": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "depression": {
+    "precision": 1.0,
+    "recall": 0.8733333333333333,
+    "f1-score": 0.9323843416370107,
+    "support": 300.0
+  },
+  "exam_stress": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "joy": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "loneliness": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "low_self_esteem": {
+    "precision": 0.8875739644970414,
+    "recall": 1.0,
+    "f1-score": 0.9404388714733543,
+    "support": 300.0
+  },
+  "neutral": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "sadness": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "stress": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 300.0
+  },
+  "accuracy": 0.9891666666666666,
+  "macro avg": {
+    "precision": 0.990354308780069,
+    "recall": 0.9891666666666666,
+    "f1-score": 0.9891241558764788,
+    "support": 3600.0
+  },
+  "weighted avg": {
+    "precision": 0.9903543087800691,
+    "recall": 0.9891666666666666,
+    "f1-score": 0.9891241558764788,
+    "support": 3600.0
+  },
+  "f1_weighted": 0.9891241558764788
+}
