@@ -3112,3 +3112,6 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-04-30 16:38:59 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
 2026-04-30 16:38:59 | INFO     | app                       | BMA Flask app created successfully.
 2026-04-30 16:39:48 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:40:42 | INFO     | app.services.response_engine | ResponseEngine loaded 105 intent tags.
+2026-04-30 16:40:42 | INFO     | app.services.llm_service  | Groq LLM initialised (model=llama-3.3-70b-versatile).
+2026-04-30 16:40:42 | INFO     | app                       | BMA Flask app created successfully.
