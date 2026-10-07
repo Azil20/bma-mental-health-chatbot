@@ -60,8 +60,8 @@ mental_health_chatbot/
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/Azil20/mental_health_chatbot.git
-cd mental_health_chatbot
+git clone https://github.com/Azil20/bma-mental-health-chatbot.git
+cd bma-mental-health-chatbot
 pip install -r requirements.txt
 ```
 
