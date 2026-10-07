@@ -38,7 +38,7 @@ mental_health_chatbot/
 ├── config.py                    # App settings
 ├── .env                         # API keys (never commit!)
 ├── requirements.txt             # Python dependencies
-├── run.py                       # App entry point
+├── app.py                       # App entry point
 └── README.md
 ```
 
@@ -65,7 +65,7 @@ GROQ_API_KEY=your_key_here
 ### 3. Run the app
 
 ```bash
-python run.py
+python app.py
 ```
 
 Open:

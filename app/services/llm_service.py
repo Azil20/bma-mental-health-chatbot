@@ -1,90 +1,106 @@
 """
-llm_service.py - LLM fallback using Groq (Llama 3.3 70B)
-With mental‑health redirect: any off‑topic question is reinterpreted
-to ask about the user's emotional state.
+llm_service.py - LLM fallback using Google Gemini API.
+With empathetic mental-health guidance and conversational intelligence.
 Creators: Bilal Jellaoui, Mohammed Azil, Ayoube Echihami
 """
 
 import logging
-import os
-from groq import Groq
+import requests
 from config.config import Config
 
 logger = logging.getLogger(__name__)
 
-# Nouveau prompt système : rediriger ou relier à la santé mentale
-REDIRECT_SYSTEM_PROMPT = """You are BMA, a compassionate mental health support assistant.
-Your goal is to always bring the conversation back to the user's emotional well‑being.
+REDIRECT_SYSTEM_PROMPT = """You are BMA, a compassionate, empathetic AI mental health companion.
+You were created by Bilal Jellaoui, Mohammed Azil, and Ayoube Echihami.
 
-IMPORTANT INFORMATION ABOUT YOUR CREATORS (all from Morocco):
-- Bilal Jellaoui is one of the creators. He was born in Sidi Kacem. He studies in Master Big Data, Intelligence Artificielle et Applications Avancées. He worked on this project with his teammates Mohammed and Ayoube.
-- Mohammed Azil is one of the creators. He was born in Béni Mellal. He studies in Master Big Data, Intelligence Artificielle et Applications Avancées. He worked on this project with his teammates Bilal and Ayoube.
-- Ayoube Echihami is one of the creators. He was born in El Jadida. He studies in Master Big Data, Intelligence Artificielle et Applications Avancées. He worked on this project with his teammates Bilal and Mohammed.
+Creators Information:
+- Bilal Jellaoui is from Sidi Kacem, Morocco. He is a Master's student in Big Data, Artificial Intelligence and Advanced Applications.
+- Mohammed Azil is from Beni Mellal, Morocco. He is a Master's student in Big Data, Artificial Intelligence and Advanced Applications.
+- Ayoube Echihami is from El Jadida, Morocco. He is a Master's student in Big Data, Artificial Intelligence and Advanced Applications.
+- Together, they created BMA to provide empathetic, accessible emotional support and well-being guidance.
+When asked about your creators, who made you, or your origins, share this information accurately and warmly.
 
-When a user asks about any of these names, answer naturally using the above information. Keep responses warm and concise (2-3 sentences).
-
-Guidelines:
-- If the user asks a question completely unrelated to mental health (sports, weather, politics, general knowledge, entertainment, etc.), do NOT answer that question.
-- Instead, politely redirect by connecting the topic to mental health. For example:
-  * User: "What's the weather like?" → You: "I don't have weather data, but how does the weather affect your mood today?"
-  * User: "Tell me a joke" → You: "A good laugh can lift our spirits. How are you feeling right now?"
-  * User: "Who won the football match?" → You: "I don't follow sports, but I'm curious – does winning or losing affect your stress levels?"
-- For any off‑topic question, you MUST respond with a short sentence that links the subject to the user's mental state, followed by an open‑ended question about their feelings.
-- Never provide factual answers about non‑mental‑health topics.
-- Always respond with empathy and warmth in 2‑3 sentences maximum.
-- Keep responses in English (translation will be handled separately)."""
+Your Personality & Mission:
+- You are warm, caring, supportive, non-judgmental, and a patient active listener.
+- When the user shares feelings of stress, anxiety, sadness, loneliness, or burnout, validate their feelings and offer gentle, practical coping strategies (like deep breathing, mindfulness, self-compassion, grounding exercises).
+- When the user greets you or checks in (e.g., "hi", "hello", "how are you"), reply warmly and ask how they are feeling today.
+- When asked general questions about mental health topics (depression, anxiety, self-care, sleep, meditation), provide clear, insightful, compassionate explanations.
+- If the user asks about completely unrelated topics (sports, weather, trivia, tech), answer briefly and politely pivot back to their well-being (e.g., "I don't keep up with that, but I'd love to know how you are feeling today!").
+- Keep responses natural, concise (2 to 4 sentences), and supportive.
+- Do not repeat generic canned phrases. Respond specifically and thoughtfully to what the user said.
+"""
 
 class LLMService:
     def __init__(self):
-        self.client = None
-        self.use_fallback = True
-        self.model = Config.GROQ_MODEL_NAME if hasattr(Config, 'GROQ_MODEL_NAME') else "llama-3.3-70b-versatile"
-        api_key = Config.GROQ_API_KEY if hasattr(Config, 'GROQ_API_KEY') else None
-        if api_key and api_key != "":
-            try:
-                self.client = Groq(api_key=api_key)
-                self.use_fallback = False
-                logger.info(f"Groq LLM initialised (model={self.model}).")
-            except Exception as e:
-                logger.error(f"Failed to initialise Groq: {e}")
+        self.api_key = getattr(Config, 'GEMINI_API_KEY', '') or ''
+        primary_model = getattr(Config, 'LLM_MODEL_NAME', 'gemini-flash-lite-latest') or 'gemini-flash-lite-latest'
+        # List of candidate models to try in case of temporary 503 / high demand spikes
+        all_candidates = [primary_model, "gemini-flash-lite-latest", "gemini-3.1-flash-lite", "gemini-flash-latest", "gemini-3.8-flash"]
+        # Deduplicate while preserving order
+        self.candidate_models = []
+        for m in all_candidates:
+            if m not in self.candidate_models:
+                self.candidate_models.append(m)
+
+        if not self.api_key:
+            logger.warning("GEMINI_API_KEY is not configured. Local fallback will be used.")
         else:
-            logger.warning("GROQ_API_KEY not set -> using local fallback responses.")
+            logger.info(f"Gemini LLM initialised with primary model '{self.candidate_models[0]}'.")
 
     def generate_response(self, user_message: str, context: str = "") -> str:
-        """Generate a response using Groq (or local fallback)."""
-        if self.use_fallback or self.client is None:
+        """Generate a response using Gemini REST API with automated model fallback."""
+        if not self.api_key:
             return self._local_fallback(user_message)
 
-        messages = [
-            {"role": "system", "content": REDIRECT_SYSTEM_PROMPT}
-        ]
+        prompt_text = user_message
         if context:
-            messages.append({"role": "assistant", "content": f"Previous conversation:\n{context}"})
-        messages.append({"role": "user", "content": user_message})
+            prompt_text = f"Recent conversation context:\n{context}\n\nUser: {user_message}"
 
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                max_tokens=200,      # réponse courte pour rediriger
-                temperature=0.7,
-            )
-            reply = response.choices[0].message.content.strip()
-            # Optionnel : vérifier que la réponse n'est pas un fait hors sujet
-            if self._is_off_topic_answer(reply):
-                return self._local_fallback(user_message)
-            return reply
-        except Exception as e:
-            logger.error(f"Groq API error: {e}")
-            return self._local_fallback(user_message)
+        payload = {
+            "system_instruction": {
+                "parts": [{"text": REDIRECT_SYSTEM_PROMPT}]
+            },
+            "contents": [
+                {
+                    "parts": [{"text": prompt_text}]
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0.7,
+                "maxOutputTokens": 350
+            }
+        }
 
-    def _is_off_topic_answer(self, text: str) -> bool:
-        """Détecte si la réponse contient un fait non lié à la santé mentale."""
-        # Mots indiquant une réponse factuelle hors domaine
-        factual_indicators = ["the capital of", "the score is", "temperature is", "history", "election", "recipe", "instructions"]
-        lower = text.lower()
-        return any(indicator in lower for indicator in factual_indicators)
+        for model_name in self.candidate_models:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={self.api_key}"
+            try:
+                res = requests.post(url, json=payload, timeout=12)
+                if res.status_code == 200:
+                    data = res.json()
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts and "text" in parts[0]:
+                            text = parts[0]["text"].strip()
+                            if text:
+                                logger.info(f"LLM generated response via {model_name}")
+                                return text
+                elif res.status_code in (503, 429, 500):
+                    logger.warning(f"Model {model_name} returned {res.status_code}, trying next model...")
+                    continue
+                else:
+                    logger.warning(f"Model {model_name} error ({res.status_code}): {res.text[:150]}")
+                    continue
+            except requests.exceptions.Timeout:
+                logger.warning(f"Model {model_name} request timed out, trying next model...")
+                continue
+            except Exception as e:
+                logger.warning(f"Model {model_name} call failed: {e}")
+                continue
+
+        logger.error("All Gemini candidate models failed to respond. Using local fallback.")
+        return self._local_fallback(user_message)
 
     def _local_fallback(self, user_message: str) -> str:
-        """Réponse locale lorsque le LLM est indisponible."""
-        return "I'm here for your mental well-being. Could you tell me how you're feeling today?"
+        """Friendly local fallback when API is unreachable."""
+        return "I'm here to support your mental well-being. How are you feeling right now, and what's on your mind?"

@@ -110,8 +110,8 @@ def train_model(task: str):
     train_ds = MentalHealthDataset(train_df, tokenizer, cfg["max_len"])
     val_ds   = MentalHealthDataset(val_df,   tokenizer, cfg["max_len"])
 
-    train_loader = DataLoader(train_ds, batch_size=cfg["batch_size"], shuffle=True,  num_workers=2)
-    val_loader   = DataLoader(val_ds,   batch_size=cfg["batch_size"], shuffle=False, num_workers=2)
+    train_loader = DataLoader(train_ds, batch_size=cfg["batch_size"], shuffle=True,  num_workers=0)
+    val_loader   = DataLoader(val_ds,   batch_size=cfg["batch_size"], shuffle=False, num_workers=0)
 
     # ── Model ─────────────────────────────────────────────────────────────────
     model = DistilBertForSequenceClassification.from_pretrained(

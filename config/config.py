@@ -13,13 +13,9 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "bma-dev-secret")
 
-    # ── LLM Primary: Groq ─────────────────────────────────────────────────────
-    GROQ_API_KEY    = os.getenv("GROQ_API_KEY", "")
-    GROQ_MODEL_NAME = os.getenv("GROQ_MODEL_NAME", "llama-3.3-70b-versatile")  # modifiable via .env
-
-    # ── LLM Fallback: Gemini ──────────────────────────────────────────────────
+    # ── LLM: Gemini ───────────────────────────────────────────────────────────
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-    LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gemini-2.0-flash")
+    LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gemini-flash-lite-latest")
 
     # ── Database ───────────────────────────────────────────────────────────────
     BASE_DIR = Path(__file__).parent.parent

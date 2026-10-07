@@ -37,6 +37,9 @@ class NLPClassifier:
             outputs = self.model(**inputs)
             probs = torch.softmax(outputs.logits, dim=1).cpu().numpy()[0]
             idx = probs.argmax()
-            intent = self.label_encoder.inverse_transform([idx])[0]
+            if hasattr(self.label_encoder, 'inverse_transform'):
+                intent = self.label_encoder.inverse_transform([idx])[0]
+            else:
+                intent = self.label_encoder[idx]
             confidence = float(probs[idx])
         return {"intent": intent, "confidence": confidence}

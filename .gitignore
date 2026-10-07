@@ -1,2 +1,37 @@
+# Environment & Secrets (NEVER COMMIT SENSITIVE KEYS)
 .env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Large Model weights (>100MB exceeds GitHub push limit)
 *.safetensors
+*.bin
+
+# Database & Logs
+database/*.db
+database/*.sqlite3
+*.db
+*.log
+logs/
+
+# Operating system artifacts
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Nested unzipped duplicate folder
+mental_health_chatbot-main/

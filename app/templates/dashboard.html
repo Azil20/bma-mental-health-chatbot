@@ -8,25 +8,28 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --teal: #1a7a6e;
-  --teal-lt: #2aab9a;
-  --teal-pale: #e8f5f3;
-  --gold: #c9a84c;
-  --cream: #fafaf8;
-  --ink: #1a1f1e;
-  --ink-soft: #3d4642;
-  --muted: #8a9490;
-  --white: #ffffff;
-  --border: #e2e8e6;
-  --shadow-sm: 0 4px 12px rgba(26,122,110,.08);
-  --r: 16px;
+  --teal: #14b8a6;
+  --teal-lt: #5eead4;
+  --teal-pale: rgba(20, 184, 166, 0.15);
+  --gold: #fbbf24;
+  --cream: #0b1120;
+  --ink: #f1f5f9;
+  --ink-soft: #94a3b8;
+  --muted: #94a3b8;
+  --white: rgba(30, 41, 59, 0.7);
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --r: 20px;
+  --glass-blur: blur(20px);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--cream);
+  background: radial-gradient(circle at top left, #1e293b, #0b1120 70%);
   color: var(--ink);
-  padding: 24px 32px;
+  padding: 32px 40px;
+  min-height: 100vh;
 }
 .dashboard-container {
   max-width: 1400px;
@@ -36,124 +39,183 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
   gap: 16px;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 24px 32px;
+  border-radius: var(--r);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 .header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--teal), var(--teal-lt));
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--ink), var(--teal-lt));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  letter-spacing: -0.5px;
 }
 .header a {
-  color: var(--teal);
+  color: var(--teal-lt);
   text-decoration: none;
-  font-weight: 500;
-  border: 1.5px solid var(--border);
-  padding: 8px 20px;
+  font-weight: 600;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 12px 24px;
   border-radius: 40px;
-  transition: 0.2s;
+  transition: var(--transition);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.header a:hover { background: var(--teal-pale); border-color: var(--teal); }
+.header a:hover { 
+  background: var(--teal-pale); 
+  border-color: var(--teal); 
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(20, 184, 166, 0.2);
+}
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
   margin-bottom: 32px;
 }
 .stat-card {
   background: var(--white);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border-radius: var(--r);
-  padding: 20px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-lt));
+  opacity: 0;
+  transition: var(--transition);
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  border-color: rgba(20, 184, 166, 0.3);
+}
+.stat-card:hover::before {
+  opacity: 1;
 }
 .stat-card h3 {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   color: var(--muted);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .stat-number {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 800;
-  color: var(--teal);
+  background: linear-gradient(135deg, var(--teal), var(--teal-lt));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   line-height: 1;
 }
 .stat-sub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-soft);
-  margin-top: 8px;
+  margin-top: 12px;
+  font-weight: 500;
 }
 .charts-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: 24px;
   margin-bottom: 32px;
 }
 .chart-card {
   background: var(--white);
+  backdrop-filter: var(--glass-blur);
   border-radius: var(--r);
-  padding: 18px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
 }
 .chart-card h3 {
   font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
   color: var(--ink);
   border-left: 4px solid var(--gold);
-  padding-left: 12px;
+  padding-left: 14px;
 }
-canvas { max-height: 280px; width: 100%; }
+canvas { max-height: 300px; width: 100%; }
 .recent-list {
   background: var(--white);
+  backdrop-filter: var(--glass-blur);
   border-radius: var(--r);
-  padding: 20px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
 }
 .recent-list h3 {
   font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
   border-left: 4px solid var(--gold);
-  padding-left: 12px;
+  padding-left: 14px;
+  color: var(--ink);
 }
 table {
   width: 100%;
   border-collapse: collapse;
 }
 th, td {
-  padding: 10px 6px;
+  padding: 14px 12px;
   text-align: left;
-  border-bottom: 1px solid var(--border);
-  font-size: 13.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px;
 }
-th { color: var(--teal); font-weight: 600; }
+th { 
+  color: var(--teal-lt); 
+  font-weight: 600; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+}
+tr {
+  transition: background 0.2s;
+}
+tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
 .loader {
   text-align: center;
-  padding: 40px;
+  padding: 60px;
   color: var(--muted);
+  font-weight: 500;
+  font-size: 16px;
 }
 .error-message {
-  background: #fee2e2;
-  color: #b91c1c;
-  padding: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  padding: 16px;
   border-radius: 12px;
   margin-bottom: 20px;
-  font-size: 13px;
+  font-size: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 @media (max-width: 800px) {
   .charts-row { grid-template-columns: 1fr; }
-  body { padding: 16px; }
+  body { padding: 20px; }
+  .header { padding: 20px; margin-bottom: 24px; }
 }
 </style>
 </head>
@@ -212,7 +274,7 @@ async function loadDashboard() {
     renderDashboard(stats, timeline, recent);
   } catch (err) {
     console.error(err);
-    container.innerHTML = `<div class="error-message">❌ Impossible de charger les données. Vérifie que le serveur backend est lancé (python run.py).</div>`;
+    container.innerHTML = `<div class="error-message">❌ Impossible de charger les données. Vérifie que le serveur backend est lancé (python app.py).</div>`;
   }
 }
 
